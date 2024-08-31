@@ -15,7 +15,7 @@ function App() {
       <NavBar />
       <Container>
         <Routes>
-          <Route path='/' element={user ? <Chat /> : <Login />} />
+          <Route path='/' element={user ? <Chat /> : <Login />} />                    {/* Conditional redirects if user isn't logged in */}
           <Route path='/register' element={user ? <Chat /> : <Register />} />
           <Route path='/login' element={user ? <Chat /> : <Login />} />
           <Route path='*' element={<Navigate to='/' />} />
