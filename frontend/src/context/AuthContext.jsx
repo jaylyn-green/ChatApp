@@ -21,7 +21,7 @@ export const AuthContextProvider = ({ children }) => {
     }, []);
 
     const registerUser = useCallback(async (e) => {
-        e.preventDefault();
+        e.preventDefault();          {/* prevent component reloading */}
         setIsRegisterLoading(true);
         setRegisterError(null);
 
@@ -37,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [registerInfo]);
 
     const logOut = (() => {
-        localStorage.removeItem("User");
+        localStorage.removeItem("User"); 
         setUser(null);
     }, []);
 
