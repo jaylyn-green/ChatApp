@@ -1,7 +1,7 @@
 const Chat = () => {
     return ( 
         <>
-            Chat
+            Chat page nothinh here just yet
         </>
      );
 }
