@@ -12,16 +12,27 @@ export const AuthContextProvider = ({ children }) => {
         email: "",
         password: ""
     });
+    const [loginError, setLoginError] = useState(null);
+    const [isLoginLoading, setIsLoginLoading] = useState(false);
+    const [loginInfo, setLoginInfo] = useState({
+        email: "",
+        password: ""
+    });
 
-    console.log("User", user);      {/* user debugging */}
-    console.log(registerInfo);
+    console.log("User", user);
+    console.log("User info",registerInfo);
+    console.log("login", loginInfo);
 
     const updateRegisterInfo = useCallback((info) => {
         setRegisterInfo(info);
     }, []);
 
+    const updateLoginInfo = useCallback((info) => {
+        setLoginInfo(info);
+    }, []);
+
     const registerUser = useCallback(async (e) => {
-        e.preventDefault();          {/* prevent component reloading */}
+        e.preventDefault();     {/* prevent component reloading */ }
         setIsRegisterLoading(true);
         setRegisterError(null);
 
@@ -31,13 +42,30 @@ export const AuthContextProvider = ({ children }) => {
         if (response.error) {
             return setRegisterError(response);
         }
-        {/* user info is pulled from browser local storage */}
+        {/* save the user to local storage */ }
         localStorage.setItem("User", JSON.stringify(response));
         setUser(response);
     }, [registerInfo]);
 
-    const logOut = (() => {
-        localStorage.removeItem("User"); 
+    const loginUser = useCallback(async (e) => {
+        e.preventDefault();
+        setIsLoginLoading(true);
+        setLoginError(null);
+        const response = await postReq(`${baseURL}/users/login`, JSON.stringify(loginInfo));
+
+        setIsLoginLoading(false);
+
+        if (response.error) {
+            return setLoginError(response);
+        }
+
+        localStorage.setItem("User", JSON.stringify(response));
+        setUser(response);
+
+    }, [loginInfo]);
+
+    const logOut = useCallback(() => {
+        localStorage.removeItem("User")
         setUser(null);
     }, []);
 
@@ -51,7 +79,12 @@ export const AuthContextProvider = ({ children }) => {
                 registerUser,
                 registerError,
                 isRegisterLoading,
-                logOut
+                logOut,
+                loginUser,
+                loginError,
+                loginInfo,
+                updateLoginInfo,
+                isLoginLoading
             }}
         >
             {children}
