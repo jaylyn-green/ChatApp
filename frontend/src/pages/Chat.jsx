@@ -1,9 +1,15 @@
+import { useContext } from "react";
+import { ChatContext } from "../context/ChatContext";
+
 const Chat = () => {
-    return ( 
+    const { userChats, isUserChatsLoading, userChatsError } = useContext(ChatContext);
+    
+    console.log("UserChats", userChats);
+    return (
         <>
-            Chat page nothing here just yet
+            Chat page nothing yet...
         </>
-     );
+    );
 }
- 
+
 export default Chat;
