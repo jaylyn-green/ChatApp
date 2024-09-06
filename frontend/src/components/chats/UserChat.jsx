@@ -1,15 +1,16 @@
 import { useFetchRecipientUser } from "../../hooks/useFetchRecipient";
 import { Stack } from "react-bootstrap";
+import avatar from "../../assets/avatar.svg"
 
 const UserChat = ({ chat, user }) => {
 
     const { recipientUser } = useFetchRecipientUser(chat, user);    //custom hook
 
     return (
-        <Stack direction = "horizontal" gap = {3} className = "user-card align-items-center p-2 justify-content-between">
+        <Stack direction="horizontal" gap={3} className="user-card align-items-center p-2 justify-content-between" role="button">
             <div className="d-flex">
                 <div className="me-2">
-                    A
+                    <img src={avatar} height="35px" />
                 </div>
                 <div className="text-content">
                     <div className="name">{recipientUser?.name}</div>
