@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { baseURL, postReq } from "../../utils/services";
 
 export const AuthContext = createContext();
@@ -20,8 +20,13 @@ export const AuthContextProvider = ({ children }) => {
     });
 
     console.log("User", user);
-    console.log("User info",registerInfo);
     console.log("login", loginInfo);
+
+    useEffect(() =>{
+       const user = localStorage.getItem("User")
+
+       setUser(JSON.parse(user));
+    },[]);
 
     const updateRegisterInfo = useCallback((info) => {
         setRegisterInfo(info);
@@ -32,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
     }, []);
 
     const registerUser = useCallback(async (e) => {
-        e.preventDefault();     {/* prevent component reloading */ }
+        e.preventDefault();     //prevents re render
         setIsRegisterLoading(true);
         setRegisterError(null);
 
@@ -42,7 +47,7 @@ export const AuthContextProvider = ({ children }) => {
         if (response.error) {
             return setRegisterError(response);
         }
-        {/* save the user to local storage */ }
+        //save the user to local storage 
         localStorage.setItem("User", JSON.stringify(response));
         setUser(response);
     }, [registerInfo]);
