@@ -14,7 +14,6 @@ export const ChatContextProvider = ({ children, user }) => {
     const [loadingMessages, setLoadingMessages] = useState(false);
     const [messageError, setMessageError] = useState(null);
 
-
     //Gets all of the users the current user can chat with 
     useEffect(() => {
         const getUsers = async () => {
@@ -103,7 +102,9 @@ export const ChatContextProvider = ({ children, user }) => {
             updateCurrentChat,
             messageError,
             messages,
-            loadingMessages
+            loadingMessages,
+            currentChat,
+            
 
         }}>
             {children}
