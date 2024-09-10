@@ -8,7 +8,7 @@ import { AuthContextProvider } from './context/AuthContext.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthContextProvider>
+      <AuthContextProvider>   {/* passes down props to all other components */}
         <App />
       </AuthContextProvider>
     </BrowserRouter>

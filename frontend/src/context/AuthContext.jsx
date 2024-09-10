@@ -22,7 +22,7 @@ export const AuthContextProvider = ({ children }) => {
     console.log("User", user);
     console.log("login", loginInfo);
 
-    useEffect(() =>{
+    useEffect(() =>{        //keeps user logged in
        const user = localStorage.getItem("User")
 
        setUser(JSON.parse(user));
@@ -37,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
     }, []);
 
     const registerUser = useCallback(async (e) => {
-        e.preventDefault();     //prevents re render
+        e.preventDefault();     //blocks default form actiond
         setIsRegisterLoading(true);
         setRegisterError(null);
 
@@ -70,7 +70,7 @@ export const AuthContextProvider = ({ children }) => {
     }, [loginInfo]);
 
     const logOut = useCallback(() => {
-        localStorage.removeItem("User")
+        localStorage.removeItem("User");
         setUser(null);
     }, []);
 
@@ -95,5 +95,5 @@ export const AuthContextProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     );
-}
+};
 

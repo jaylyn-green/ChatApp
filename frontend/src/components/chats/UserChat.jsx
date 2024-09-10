@@ -28,4 +28,4 @@ const UserChat = ({ chat, user }) => {
     );
 }
 
-export default UserChat
+export default UserChat;

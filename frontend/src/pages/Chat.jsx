@@ -4,9 +4,10 @@ import { Container, Stack } from "react-bootstrap"
 import UserChat from "../components/chats/UserChat";
 import { AuthContext } from "../context/AuthContext";
 import PotentialChats from "../components/chats/PotentialChats";
+import ChatBox from "../components/chats/chatBox";
 
 const Chat = () => {
-    const { userChats, isUserChatsLoading, userChatsError } = useContext(ChatContext);
+    const { userChats, isUserChatsLoading, updateCurrentChat } = useContext(ChatContext);
     const { user } = useContext(AuthContext);
 
     return (
@@ -20,14 +21,13 @@ const Chat = () => {
                                 {isUserChatsLoading && <p>Loading...</p>}
                                 {userChats?.map((chat, index) => {
                                     return (
-                                        <div key={index}>
+                                        <div key={index} onClick={updateCurrentChat(chat)}>
                                             <UserChat chat={chat} user={user} />
                                         </div>
-                                    )
-
+                                    );
                                 })}
                             </Stack>
-                            <p>ChatBox</p>
+                            <ChatBox />
                         </Stack>
                     )
                 }
