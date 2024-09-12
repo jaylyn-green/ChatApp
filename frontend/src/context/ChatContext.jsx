@@ -13,6 +13,7 @@ export const ChatContextProvider = ({ children, user }) => {
     const [messages, setMessages] = useState(null);
     const [loadingMessages, setLoadingMessages] = useState(false);
     const [messageError, setMessageError] = useState(null);
+    
 
     //Gets all of the users the current user can chat with 
     useEffect(() => {
