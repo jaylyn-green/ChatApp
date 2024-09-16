@@ -13,7 +13,9 @@ export const ChatContextProvider = ({ children, user }) => {
     const [messages, setMessages] = useState(null);
     const [loadingMessages, setLoadingMessages] = useState(false);
     const [messageError, setMessageError] = useState(null);
-    
+    const [sendTextError, setSendTextError] = useState(null);
+    const [newMessage, setNewMessage] = useState(null);
+
 
     //Gets all of the users the current user can chat with 
     useEffect(() => {
@@ -76,6 +78,27 @@ export const ChatContextProvider = ({ children, user }) => {
         getMessages();
     }, [currentChat]);
 
+    const sendMessage = useCallback(async (text, sender, currentChatId, setText) => {
+
+        if (!text) return console.log("Cannot send empty message!");
+
+        const response = await postReq(`${baseURL}/messages`, JSON.stringify({
+            chatId: currentChatId,
+            snederId: sender._id,
+            text: text
+        }));
+
+        if(response.error){
+            return setSendTextError(response);
+        }
+
+        setNewMessage(response);
+        setMessages((prev)=>[...prev, response]);
+        setText("");
+
+
+    }, [])
+
     const updateCurrentChat = useCallback((chat) => {
         setCurrentChat(chat);
     }, []);
@@ -105,7 +128,8 @@ export const ChatContextProvider = ({ children, user }) => {
             messages,
             loadingMessages,
             currentChat,
-            
+            sendMessage
+
 
         }}>
             {children}
